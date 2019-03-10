@@ -1,0 +1,40 @@
+<div class="example-container mat-elevation-z8">
+  <div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <div class="button-row">
+    <a mat-flat-button color="primary" [routerLink]="['/enrollments']"><mat-icon>list</mat-icon></a>
+  </div> 
+  <mat-card class="example-card">
+    <form [formGroup]="studentForm" (ngSubmit)="onFormSubmit(studentForm.value)">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Student Name" formControlName="name" [errorStateMatcher]="matcher">
+        <mat-error>
+          <span *ngIf="!studentForm.get('name').valid && studentForm.get('name').touched">Please enter Name</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Student Email" formControlName="email" [errorStateMatcher]="matcher">
+        <mat-error>
+          <span *ngIf="!studentForm.get('email').valid && studentForm.get('email').touched">Please enter Email</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Student Age" formControlName="age" [errorStateMatcher]="matcher">
+        <mat-error>
+          <span *ngIf="!studentForm.get('age').valid && studentForm.get('age').touched">Please enter age</span>
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Student Course" formControlName="courseName" [errorStateMatcher]="matcher">
+        <mat-error>
+          <span *ngIf="!studentForm.get('courseName').valid && studentForm.get('courseName').touched">Please enter Course</span>
+        </mat-error>
+      </mat-form-field>    
+      <div class="button-row">
+        <button type="submit" [disabled]="!studentForm.valid" mat-flat-button color="primary"><mat-icon>save</mat-icon></button>
+      </div>
+    </form>
+  </mat-card>
+</div>
