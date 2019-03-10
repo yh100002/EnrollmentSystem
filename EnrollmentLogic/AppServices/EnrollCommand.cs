@@ -61,8 +61,9 @@ namespace EnrollmentApi.Logic.AppServices
                     this._messageBus.Publish<StudentEnrollEvent>(new
                     {
                         student.Id,
-                        student.Name,
+                        student.Name,                        
                         student.Email,
+                        student.Age,
                         course,
                         teacherName
                     }

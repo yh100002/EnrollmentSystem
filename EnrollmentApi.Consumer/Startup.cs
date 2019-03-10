@@ -55,7 +55,7 @@ namespace EnrollmentApi.Consumer
             {
                 var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                    var host = cfg.Host(new Uri("rabbitmq://192.168.99.100"), h =>
+                    var host = cfg.Host(new Uri("rabbitmq://localhost"), h =>
                     {
                         h.Username("rabbitmq");
                         h.Password("rabbitmq");

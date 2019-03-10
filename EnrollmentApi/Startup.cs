@@ -23,6 +23,10 @@ using MassTransit.Util;
 using RabbitMQ.Client;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using EnrollmentLogic.Configuration;
+using EnrollmentLogic.ExceptionHandler;
+using EnrollmentLogic.Helpers;
+using EnrollmentLogic.Log;
 
 namespace EnrollmentApi
 {
@@ -90,13 +94,17 @@ namespace EnrollmentApi
             services.AddSingleton<IMessages, Messages>();            
             services.AddHandlers();
 
+            services.Configure<ElasticConnectionSettings>(Configuration.GetSection("ElasticConnectionSettings"));    
+            services.AddSingleton(typeof(ElasticClientProvider));                  
+            services.AddScoped<ILogViewRepository, LogViewRepository>();
+
             var builder = new ContainerBuilder();
 
             builder.Register(c =>
             {
                 return Bus.Factory.CreateUsingRabbitMq(sbc =>
                 {
-                    sbc.Host(new Uri("rabbitmq://192.168.99.100"), h =>
+                    sbc.Host(new Uri("rabbitmq://localhost"), h =>
                     {
                         h.Username("rabbitmq");
                         h.Password("rabbitmq");
@@ -113,10 +121,7 @@ namespace EnrollmentApi
             builder.Populate(services);
             ApplicationContainer = builder.Build();
 
-            return new AutofacServiceProvider(ApplicationContainer);
-
-            //SeriLog
-            /*
+             //SeriLog            
             var url = Configuration.GetSection("ElasticConnectionSettings:ClusterUrl").Value;
             Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information() //levels can be overridden per logging source
@@ -125,14 +130,19 @@ namespace EnrollmentApi
             .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(url)) //Logging to Elasticsearch
             {
                 AutoRegisterTemplate = true //auto index template like logstash as prefix           
-            }).CreateLogger();
-            */
+            }).CreateLogger();  
 
+            return new AutofacServiceProvider(ApplicationContainer);           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime)
         {
+             // Handles non-success status codes with empty body
+            app.UseExceptionHandler("/errors/500");            
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
+             //To handle unexpected exception globally, register custome middleware
+            app.UseMiddleware<CustomExceptionMiddleware>();   
             //Enable CORS with CORS Middleware for convenience   
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());           
              //Enable PerformanceLogger as middleware layer by using extention
