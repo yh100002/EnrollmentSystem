@@ -1,14 +1,12 @@
-###Features
-- Industry Standard Authentication Based On JWT hash token
-- Aggegated Log Statistics Based On Elasticsearch
-- Kibana Dashboard
-- Registration And Login
-- Alert Notice, Error and Exception
-- Pagination
-- CRUD Book
-- Local Keyword Search
-- API Versioning for API Gateway Service
-- CQRS Architect Pattern For Scalablilty
+### Feartures
+
+- Enrollment Managemet Sign-up
+- Swagger API Documentation
+- Performance Logging Into Elastiksearch
+- Centralized Exception Logging Into Elastiksearch 
+- Log Monitoring with Kinbana
+- Single Page Application With Angular 7 (50% Progress)
+- Event Bus
 
 ### CQRS Architect
 ![image](https://drive.google.com/uc?export=view&id=1tnToN4C3DzzjWAOVI4WA26qM-fVWi-FO)
@@ -27,10 +25,12 @@
 >In my experiences through several projects, seperation of concerns is the most important factor for maintenance with many different developers. Especially, I think controllers should not contain many logic in itself.
 
 - Rest API
->So I used some readable words and names on them unlike Rest API CRUD conventions but it works well. :) 
+
+- RabbitMQ
+>As a consequence of the separation, the related service and the records service needs to be informed about the creation of the running session. The service for storing the running session could, for example, send HTTP requests to those two interested services, but this leads to a tighter coupling of the services.
 
 - Elasticsearch
->When I received this assignment email, I decided to use Elasticsearch immediately. 
+>I decided to use Elasticsearch immediately for centralized log repository.
 >As you may know, it has a lot of benefits for flexible search and aggregation and of course scalability. 
 
 - Kibana Dashboard
@@ -42,10 +42,12 @@
 >But for this project I need only docker to deploy ELK handy.
 
 - MSSQL Linux
->A bit heavy and slow than other DBMS
+>A bit heavy and slow than other DBMS but I have been touched by running on linux.
 
 - Angular 7
 >One of fancy SPA front-end stacks
+
+
 
 ### Read Me
 - Prerequisite
@@ -65,8 +67,9 @@
 >> - docker network create esnetwork --driver=bridge
 >> - docker-compose up 'on the same folder of branch root'
 >> - Elasticsearch and Kinbana will be downloaded and run.
-> - After running Docker,Kibana,Elasticsearch, mssql linux rabbitMQ, you can run the main service module 'Web', 'Command.API' and 'Query.API' by running 'dotnet run'
-> - After that, you can go to 'SPA' and run 'ng serve' and open 'http://localhost:4200'
+> - After running Docker,Kibana,Elasticsearch, mssql linux rabbitMQ, 
+you can run the main service module 'EnrollmentApi' and 'EnrollmentApi.Consumer' by using 'dotnet run'
+> - After that, you can go to 'Enrollment-SPA(50% progress)' and run 'ng serve' and open 'http://localhost:4200'
 > - Thats it!
 
 - How To Use
