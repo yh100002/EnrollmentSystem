@@ -75,6 +75,7 @@ you can run the main service module 'EnrollmentApi' and 'EnrollmentApi.Consumer'
 - How To Use
 > - SPA : http://localhost:4200/
 > - Kibana Dashboard : http://localhost:5601/
+> - Swagger UI : https://localhost:5001/swagger/index.html
 >> - To use Kibana at first, you have to import one file which is in the root branch named 'kibana_dashboard_indexpattern.json'
 	You can easily import it. Go to 'Management' menu and Open 'Save Objects' link and you can see 'Import' link button upper side.
 	Then you can import the json file. And then you should make the default index pattern. Go to the 'Management' menu again.  
