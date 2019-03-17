@@ -1,8 +1,5 @@
 
 
-### PPT
-
-https://docs.google.com/presentation/d/1wHL-tcLhJl3DV0_MogXYpBonjFBC2g_8GycQoEtZblE/edit?usp=sharing
 
 
 ### Feartures
